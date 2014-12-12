@@ -1,0 +1,714 @@
+
+package agendaanimal;
+
+import java.sql.SQLException;
+import javax.swing.JOptionPane;
+
+public class LembreteFrame extends javax.swing.JFrame 
+{
+     ConectarBanco con_Lembrete, con_Pets, con_Descricao;
+     int navega = 0;
+     boolean primeiraVezPet = true, primeiraVezDescricao= true;
+
+    public LembreteFrame() 
+    {
+       
+        initComponents();
+        con_Lembrete=new ConectarBanco();
+        con_Lembrete.conectar();
+        
+        con_Pets= new ConectarBanco();
+        con_Pets.conectar();
+        
+        con_Descricao= new ConectarBanco();
+        con_Descricao.conectar();
+        
+        con_Lembrete.executeSQL("select * from Lembretes2 order by dia"); 
+        con_Pets.executeSQL("Select * from Animal order by Nome");
+        con_Descricao.executeSQL("Select * from descricoes order by Descricao");
+       
+        try
+        {
+        while(con_Pets.rs.next())
+            cb_Pet.addItem(con_Pets.rs.getString("Nome"));
+        while(con_Descricao.rs.next())
+            cb_Descricao.addItem(con_Descricao.rs.getString("Descricao")); 
+        }
+        catch(Exception e)
+        {
+            JOptionPane.showMessageDialog(null, "Problemas no combobox");
+        }
+       
+        
+        try
+        {
+             con_Lembrete.rs.first();
+             mostrar();
+             
+             if(txbCodigo==null)
+             {
+                  btnCadastrarActionPerformed(null);
+             }
+        }
+        catch(SQLException erro)
+        {
+           
+        }
+    }
+
+    @SuppressWarnings("unchecked")
+    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
+    private void initComponents() {
+
+        jPanel2 = new javax.swing.JPanel();
+        txbPesquisa = new javax.swing.JTextField();
+        jLabel6 = new javax.swing.JLabel();
+        jLabel1 = new javax.swing.JLabel();
+        jPanel3 = new javax.swing.JPanel();
+        btnCadastrar = new javax.swing.JButton();
+        btnSalvar = new javax.swing.JButton();
+        jButton6 = new javax.swing.JButton();
+        jButton5 = new javax.swing.JButton();
+        xcv = new javax.swing.JPanel();
+        btnAvancar = new javax.swing.JButton();
+        jLabel2 = new javax.swing.JLabel();
+        btnAvancarTudo = new javax.swing.JButton();
+        jLabel3 = new javax.swing.JLabel();
+        btnVoltarTudo = new javax.swing.JButton();
+        btnVoltar = new javax.swing.JButton();
+        jLabel4 = new javax.swing.JLabel();
+        cb_Pet = new javax.swing.JComboBox();
+        txbCodigo = new javax.swing.JTextField();
+        vfbgh = new javax.swing.JLabel();
+        txbcod_Pet = new javax.swing.JTextField();
+        txbcod_Descricao = new javax.swing.JTextField();
+        cb_Descricao = new javax.swing.JComboBox();
+        dfvbd = new javax.swing.JLabel();
+        Valor = new javax.swing.JLabel();
+        txbValor = new javax.swing.JTextField();
+        jPanel1 = new javax.swing.JPanel();
+        txbDia = new javax.swing.JTextField();
+        txbHora = new javax.swing.JTextField();
+
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+
+        jPanel2.setBackground(new java.awt.Color(255, 255, 255));
+
+        txbPesquisa.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txbPesquisaActionPerformed(evt);
+            }
+        });
+
+        jLabel6.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jLabel6.setText("Pesquisar.:");
+
+        jLabel1.setBackground(new java.awt.Color(255, 255, 255));
+        jLabel1.setFont(new java.awt.Font("Segoe UI Symbol", 1, 20)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(255, 0, 102));
+        jLabel1.setText("Consulta");
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel6)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(txbPesquisa, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(4, 4, 4))
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel1)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addComponent(jLabel1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel6)
+                    .addComponent(txbPesquisa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap())
+        );
+
+        jPanel3.setBackground(new java.awt.Color(255, 255, 255));
+
+        btnCadastrar.setText("Cadastrar");
+        btnCadastrar.setToolTipText("clique aqui para cadastrar um novo bichinho");
+        btnCadastrar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCadastrarActionPerformed(evt);
+            }
+        });
+
+        btnSalvar.setText("Salvar");
+        btnSalvar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSalvarActionPerformed(evt);
+            }
+        });
+
+        jButton6.setText("Alterar");
+        jButton6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton6ActionPerformed(evt);
+            }
+        });
+
+        jButton5.setText("Excluir");
+        jButton5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton5ActionPerformed(evt);
+            }
+        });
+
+        xcv.setBackground(new java.awt.Color(0, 0, 0));
+
+        javax.swing.GroupLayout xcvLayout = new javax.swing.GroupLayout(xcv);
+        xcv.setLayout(xcvLayout);
+        xcvLayout.setHorizontalGroup(
+            xcvLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
+        xcvLayout.setVerticalGroup(
+            xcvLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 9, Short.MAX_VALUE)
+        );
+
+        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+        jPanel3.setLayout(jPanel3Layout);
+        jPanel3Layout.setHorizontalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addGap(45, 45, 45)
+                .addComponent(btnCadastrar)
+                .addGap(30, 30, 30)
+                .addComponent(btnSalvar)
+                .addGap(55, 55, 55)
+                .addComponent(jButton6)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 77, Short.MAX_VALUE)
+                .addComponent(jButton5)
+                .addGap(61, 61, 61))
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(xcv, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        jPanel3Layout.setVerticalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnCadastrar)
+                    .addComponent(btnSalvar)
+                    .addComponent(jButton6)
+                    .addComponent(jButton5))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(xcv, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(19, Short.MAX_VALUE))
+        );
+
+        btnAvancar.setText(">");
+        btnAvancar.setToolTipText("Vai para o próximo Registro");
+        btnAvancar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAvancarActionPerformed(evt);
+            }
+        });
+
+        jLabel2.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jLabel2.setText("Pet.:");
+
+        btnAvancarTudo.setText(">>");
+        btnAvancarTudo.setToolTipText("Vai para o Ultimo Registro");
+        btnAvancarTudo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAvancarTudoActionPerformed(evt);
+            }
+        });
+
+        jLabel3.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jLabel3.setText("Descricao.:");
+
+        btnVoltarTudo.setText("<<");
+        btnVoltarTudo.setToolTipText("Vai para o primeiro registro");
+        btnVoltarTudo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnVoltarTudoActionPerformed(evt);
+            }
+        });
+
+        btnVoltar.setText("<");
+        btnVoltar.setToolTipText("Vai para o registro Anterior");
+        btnVoltar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnVoltarActionPerformed(evt);
+            }
+        });
+
+        jLabel4.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jLabel4.setText("Dia.:");
+
+        cb_Pet.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cb_PetActionPerformed(evt);
+            }
+        });
+
+        txbCodigo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txbCodigoActionPerformed(evt);
+            }
+        });
+
+        vfbgh.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        vfbgh.setText("Codigo.:");
+
+        txbcod_Pet.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txbcod_PetActionPerformed(evt);
+            }
+        });
+
+        txbcod_Descricao.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txbcod_DescricaoActionPerformed(evt);
+            }
+        });
+
+        cb_Descricao.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cb_DescricaoActionPerformed(evt);
+            }
+        });
+
+        dfvbd.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        dfvbd.setText("Hora.:");
+
+        Valor.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        Valor.setText("Valor.:");
+
+        jPanel1.setBackground(new java.awt.Color(0, 0, 0));
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 14, Short.MAX_VALUE)
+        );
+
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(vfbgh)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(txbCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel3)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(txbcod_Descricao, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(cb_Descricao, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(Valor)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(txbValor, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(33, 33, 33)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jLabel2)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(txbcod_Pet, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(cb_Pet, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jLabel4)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(txbDia, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(dfvbd)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(txbHora, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGap(58, 58, 58)
+                                        .addComponent(btnVoltarTudo)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(btnVoltar)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(btnAvancar)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(btnAvancarTudo)))))
+                        .addGap(0, 0, Short.MAX_VALUE))))
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(vfbgh)
+                    .addComponent(txbCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(27, 27, 27)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel2)
+                    .addComponent(txbcod_Pet, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cb_Pet, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel3)
+                    .addComponent(txbcod_Descricao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cb_Descricao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(Valor)
+                    .addComponent(txbValor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel4)
+                    .addComponent(dfvbd)
+                    .addComponent(txbDia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txbHora, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(26, 26, 26)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnVoltarTudo)
+                    .addComponent(btnVoltar)
+                    .addComponent(btnAvancar)
+                    .addComponent(btnAvancarTudo))
+                .addGap(18, 18, 18)
+                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        pack();
+    }// </editor-fold>//GEN-END:initComponents
+
+    private void btnCadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCadastrarActionPerformed
+        limpar_dados();
+        txbCodigo.setEditable(false);
+        txbcod_Descricao.setEditable(false);
+       txbcod_Pet.setEditable(false);
+        limpar_dados();
+    }//GEN-LAST:event_btnCadastrarActionPerformed
+
+    private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
+
+        if ((txbDia.getText().isEmpty()))
+        {
+            JOptionPane.showMessageDialog(null, "Os campos não podem retornar vazios");
+        }
+        else{
+            try
+            {
+                String sqlInsert = "INSERT INTO Lembretes2(idDescricao,Dia,idAnimal,hora)VALUES("+
+                txbcod_Descricao.getText()+",'"+
+                txbDia.getText()+"',"+
+                txbcod_Pet.getText()+",'"+
+                txbHora.getText()+"')";
+                           
+                con_Lembrete.stm.executeUpdate(sqlInsert);
+                JOptionPane.showMessageDialog(null,"Gravação realizada com sucesso");
+
+                con_Lembrete.rs= con_Lembrete.stm.executeQuery("Select * from Lembretes2");
+                con_Lembrete.rs.next();
+                mostrar();
+
+            } catch (SQLException u)
+            {
+                JOptionPane.showMessageDialog(null, "Problemas ao salvar"+u);
+            }
+        }
+    }//GEN-LAST:event_btnSalvarActionPerformed
+
+    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
+        try
+        {
+            String sql= "UPDATE Lembretes2 SET idDescricao="+txbcod_Descricao.getText()+","+"Dia='"+txbDia.getText()+"',"+"idAnimal="+txbcod_Pet.getText()+","+"hora='"+txbHora.getText()+"' Where idLembrete ="+txbCodigo.getText();
+            con_Lembrete.stm.executeUpdate(sql);
+            JOptionPane.showMessageDialog(null,"Alteração realizada com sucesso");
+
+            con_Lembrete.executeSQL("Select * from Lembretes2");
+            con_Lembrete.rs.next();
+            mostrar();
+        }
+        catch(SQLException erro)
+        {
+            JOptionPane.showMessageDialog(null, "Erro a tentar alterar registro..."+ erro);
+        }
+    }//GEN-LAST:event_jButton6ActionPerformed
+
+    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+
+        try
+        {
+            String sql= "Select * from Lembretes2 where idLembrete = "+ txbCodigo.getText();
+            con_Lembrete.executeSQL(sql);
+            con_Lembrete.rs.first();
+
+            String nome = "Deletar o Lembrete: " +con_Lembrete.rs.getString("Descricao");
+
+            int opcao_escolhida = JOptionPane.showConfirmDialog(null, nome,"Exclusão",JOptionPane.YES_NO_OPTION);
+            if(opcao_escolhida == JOptionPane.YES_OPTION)
+            {
+                sql = "Delete From Lembretes2 Where idLembrete="+txbCodigo.getText();
+                int conseguiu_excluir = con_Lembrete.stm.executeUpdate(sql);
+                if(conseguiu_excluir == 1)
+                {
+                    JOptionPane.showMessageDialog(null,"Exclusão realizada com sucesso");
+                    con_Lembrete.executeSQL("Select * from Lembretes2");
+                    con_Lembrete.rs.first();
+                    mostrar();
+                }
+            }
+            else
+            return;
+        }
+        catch (SQLException ex)
+        {
+            JOptionPane.showMessageDialog(null,"Erro ao tentar excluir");
+        }
+    }//GEN-LAST:event_jButton5ActionPerformed
+
+    private void btnAvancarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAvancarActionPerformed
+        try
+        {
+            navega = 2;
+            con_Lembrete.rs.next();
+            mostrar();
+        }
+        catch(SQLException erro)
+        {
+            JOptionPane.showMessageDialog(null,"Voçê já está no ultimo registro");
+        }
+    }//GEN-LAST:event_btnAvancarActionPerformed
+
+    private void btnAvancarTudoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAvancarTudoActionPerformed
+        try
+        {
+            con_Lembrete.rs.last();
+            mostrar();
+        }
+        catch(SQLException erro)
+        {
+            JOptionPane.showMessageDialog(null,"Voçê já está no ultimo registro");
+        }
+    }//GEN-LAST:event_btnAvancarTudoActionPerformed
+
+    private void btnVoltarTudoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVoltarTudoActionPerformed
+        try
+        {
+            con_Lembrete.rs.first();
+            mostrar();
+        }
+        catch(SQLException erro)
+        {
+            JOptionPane.showMessageDialog(null,"Voçê já está no primeiro registro ");
+        }
+    }//GEN-LAST:event_btnVoltarTudoActionPerformed
+
+    private void btnVoltarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVoltarActionPerformed
+        try
+        {
+            navega = 1;
+            con_Lembrete.rs.previous();
+            mostrar();
+
+        }
+        catch(SQLException erro)
+        {
+            JOptionPane.showMessageDialog(null,"Voçê já está no primeiro registro");
+        }
+    }//GEN-LAST:event_btnVoltarActionPerformed
+
+    private void txbCodigoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txbCodigoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txbCodigoActionPerformed
+
+    private void cb_PetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cb_PetActionPerformed
+            atualizaPet();
+    }//GEN-LAST:event_cb_PetActionPerformed
+
+    private void txbcod_PetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txbcod_PetActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txbcod_PetActionPerformed
+
+    private void txbcod_DescricaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txbcod_DescricaoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txbcod_DescricaoActionPerformed
+
+    private void cb_DescricaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cb_DescricaoActionPerformed
+        atualizaDescricao();
+    }//GEN-LAST:event_cb_DescricaoActionPerformed
+
+    private void txbPesquisaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txbPesquisaActionPerformed
+        try
+        {
+            con_Lembrete.rs.first();
+            String igual = "n";
+            int tamanho_pesquisa = txbPesquisa.getText().length();
+
+            while(igual=="n")
+            {
+                String Pesquisado= con_Lembrete.rs.getString("dia").substring(0,(tamanho_pesquisa));
+
+                if(Pesquisado.equals(txbPesquisa.getText()))
+                {
+                    igual="s";
+                }
+                else
+                con_Lembrete.rs.next();
+            }
+            txbDia.setText(con_Lembrete.rs.getString("dia"));
+            mostrar();
+        }
+        catch(Exception erro)
+        {
+            JOptionPane.showMessageDialog(null,"Não foi possível localizar");
+        }
+    }//GEN-LAST:event_txbPesquisaActionPerformed
+
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String args[]) {
+      
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                new LembreteFrame().setVisible(true);
+            }
+        });
+    }
+
+    // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel Valor;
+    private javax.swing.JButton btnAvancar;
+    private javax.swing.JButton btnAvancarTudo;
+    private javax.swing.JButton btnCadastrar;
+    private javax.swing.JButton btnSalvar;
+    private javax.swing.JButton btnVoltar;
+    private javax.swing.JButton btnVoltarTudo;
+    private javax.swing.JComboBox cb_Descricao;
+    private javax.swing.JComboBox cb_Pet;
+    private javax.swing.JLabel dfvbd;
+    private javax.swing.JButton jButton5;
+    private javax.swing.JButton jButton6;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
+    private javax.swing.JTextField txbCodigo;
+    private javax.swing.JTextField txbDia;
+    private javax.swing.JTextField txbHora;
+    private javax.swing.JTextField txbPesquisa;
+    private javax.swing.JTextField txbValor;
+    private javax.swing.JTextField txbcod_Descricao;
+    private javax.swing.JTextField txbcod_Pet;
+    private javax.swing.JLabel vfbgh;
+    private javax.swing.JPanel xcv;
+    // End of variables declaration//GEN-END:variables
+
+ public void limpar_dados()
+        {
+            txbCodigo.setText("");
+            txbDia.setText("");
+            cb_Pet.setSelectedItem("");
+            txbCodigo.setText("");
+            txbDia.setText("");
+            cb_Descricao.setSelectedItem("");
+            cb_Pet.setSelectedItem("");
+            txbcod_Descricao.setText("");
+            txbcod_Pet.setText("");
+            txbHora.setText("");
+            txbcod_Descricao.setText("");
+        }
+ 
+ 
+ public void mostrar()
+    {
+        try
+        {
+        txbcod_Descricao.setText(con_Lembrete.rs.getString("idDescricao"));
+        txbDia.setText(con_Lembrete.rs.getString("dia"));
+        txbCodigo.setText(con_Lembrete.rs.getString("idLembrete"));
+        txbcod_Pet.setText(con_Lembrete.rs.getString("idAnimal"));
+        txbHora.setText(con_Lembrete.rs.getString("hora"));
+        txbcod_Descricao.setEditable(false);
+        txbCodigo.setEditable(false);
+        txbcod_Pet.setEditable(false);
+        atualizaDescricao();
+        atualizaPet();
+            
+        }
+        catch(SQLException erro)
+        {
+            if(navega == 1)
+            {
+              JOptionPane.showMessageDialog(null,"você já está no primeiro registro");
+            }
+            else{
+                 if(navega == 2)
+                 {
+                     JOptionPane.showMessageDialog(null,"você já está no ultimo registro");
+                 }
+                  
+            }    
+        }
+}
+ 
+ public void atualizaDescricao()
+ {
+          if(primeiraVezDescricao == false)
+        {
+        try
+        {
+            String sql = "select * from Descricoes where Descricao like'"+cb_Descricao.getSelectedItem()+"'";
+            con_Descricao.executeSQL(sql);
+            con_Descricao.rs.first();
+            txbcod_Descricao.setText(con_Descricao.rs.getString("idDescricao"));
+            txbValor.setText(con_Descricao.rs.getString("valor"));
+        }
+        catch(SQLException erro)
+        {
+            JOptionPane.showMessageDialog(null, "Não possível localizar o Serviço ");
+        }  }
+        primeiraVezDescricao=false;
+    }
+ 
+ public void atualizaPet()
+ {
+ if(primeiraVezPet == false)
+{
+try
+{
+    String sql = "select * from Animal where Nome like'"+cb_Pet.getSelectedItem()+"'";
+    con_Pets.executeSQL(sql);
+    con_Pets.rs.first();
+    txbcod_Pet.setText(con_Pets.rs.getString("idAnimal"));
+}
+catch(SQLException erro)
+{
+    JOptionPane.showMessageDialog(null, "Não possível localizar o Pet");
+}
+}
+primeiraVezPet= false;}
+ }
